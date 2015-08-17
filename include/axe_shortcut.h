@@ -35,7 +35,9 @@
 #include "axe_numeric_function.h"
 
 #pragma GCC diagnostic push
+#ifdef __clang__
 #pragma GCC diagnostic ignored "-Wglobal-constructors"
+#endif
 
 namespace axe {
 namespace shortcuts {
