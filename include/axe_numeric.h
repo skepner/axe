@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 //  Copyright (C) 2011-2012, GB Research, LLC (www.gbresearch.com)
-//  
+//
 //  Boost Software License - Version 1.0 - August 17th, 2003
 //
 //  Permission is hereby granted, free of charge, to any person or organization
@@ -54,9 +54,9 @@ namespace axe {
             if(match.matched)
             {
                 number_ = 0;
-                
+
                 for(;i1 != match.position; ++i1)
-                    number_ = number_ * 10 + *i1 - '0';
+                    number_ = number_ * 10 + static_cast<T>(*i1) - '0';
             }
             return match;
         }
@@ -90,7 +90,7 @@ namespace axe {
         {
             char sign = 0;
 
-            result<Iterator> match = 
+            result<Iterator> match =
                 (
                 ~(r_char('-') >> sign | '+') // optional sign
                 & ~r_predstr(is_space()) // optional spaces
@@ -227,9 +227,9 @@ namespace axe {
             unsigned u2 = 0;
             unsigned length = 0;
 
-            result<Iterator> result = 
+            result<Iterator> result =
                 (
-                r_udecimal_t<unsigned>(u1) 
+                r_udecimal_t<unsigned>(u1)
                 & ~('.' & ~(r_udecimal_t<unsigned>(u2) >> e_length(length)))
                 | '.' & r_udecimal_t<unsigned>(u2) >> e_length(length)
                 )(i1, i2);
@@ -253,7 +253,7 @@ namespace axe {
         {
             return
                 (
-                r_udecimal_t<>() 
+                r_udecimal_t<>()
                 & ~('.' & ~r_udecimal_t<>())
                 | '.' & r_udecimal_t<>()
                 )(i1, i2);
@@ -275,14 +275,14 @@ namespace axe {
         result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             char sign = 0;
-            
+
             result<Iterator> result = // optional sign
                 (
                 ~(r_char('-') >> sign | '+')
                 & ~r_predstr(is_space())
                 & r_ufixed_t<T>(number_)
                 )(i1, i2);
-            
+
             if(result.matched && sign == '-')
                 number_ *= -1;
 
@@ -328,11 +328,11 @@ namespace axe {
             int flen(0);
             int e(0);
 
-            result<Iterator> result = 
+            result<Iterator> result =
                 (
                 ~(r_lit('-') >> sign | '+')
-                & ~r_predstr(is_space()) 
-                & 
+                & ~r_predstr(is_space())
+                &
                 (
                 r_udecimal_t<unsigned>(i) & ~('.' & ~r_udecimal_t<unsigned>(frac) >> e_length(flen))
                 | '.' & r_udecimal_t<unsigned>(frac) >> e_length(flen)
@@ -358,8 +358,8 @@ namespace axe {
             return
                 (
                 ~(r_lit('-') | '+')
-                & ~r_predstr(is_space()) 
-                & 
+                & ~r_predstr(is_space())
+                &
                 (
                 r_udecimal_t<>() & ~('.' & ~r_udecimal_t<>())
                 | '.' & r_udecimal_t<>()

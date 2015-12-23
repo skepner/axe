@@ -161,7 +161,7 @@ namespace axe {
     r_many_t< typename std::enable_if<AXE_IS_RULE(R), R>::type, r_empty_t >
     operator* (R&& r)
     {
-        return r_many_t<R, r_empty_t>(std::forward<R>(r), r_empty_t(), 0, -1);
+        return r_many_t<R, r_empty_t>(std::forward<R>(r), r_empty_t(), 0, static_cast<size_t>(-1));
     }
 
     /// unary operator+ matches specified rule 1 or more times
@@ -170,7 +170,7 @@ namespace axe {
     r_many_t< typename std::enable_if<AXE_IS_RULE(R), R>::type, r_empty_t >
     operator+ (R&& r)
     {
-        return r_many_t<R, r_empty_t>(std::forward<R>(r), r_empty_t(), 1, -1);
+        return r_many_t<R, r_empty_t>(std::forward<R>(r), r_empty_t(), 1, static_cast<size_t>(-1));
     }
 
     /// operator% matches rule, followed by separator 1 or more times
