@@ -176,9 +176,9 @@ namespace axe {
     /// operator% matches rule, followed by separator 1 or more times
     template<class R1, class R2>
     inline
-    auto operator% (R1&& r1, R2&& r2) -> decltype(r_many(std::forward<R1>(r1), std::forward<R2>(r2), 1, -1))
+            auto operator% (R1&& r1, R2&& r2) -> decltype(r_many(std::forward<R1>(r1), std::forward<R2>(r2), 1, static_cast<size_t>(-1)))
     {
-        return r_many(std::forward<R1>(r1), std::forward<R2>(r2), 1, -1);
+        return r_many(std::forward<R1>(r1), std::forward<R2>(r2), 1, static_cast<size_t>(-1));
     }
 
     /// binary operator- matches first rule, but not the second (r1 - r2 is the same as !r2 & r1)
