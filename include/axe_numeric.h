@@ -228,11 +228,11 @@ namespace axe {
             unsigned length = 0;
 
             result<Iterator> result =
-            ((
+            (
                 (r_udecimal_t<unsigned>(u1)
                  & ~('.' & ~(r_udecimal_t<unsigned>(u2) >> e_length(length))))
-                | '.')
-             & r_udecimal_t<unsigned>(u2) >> e_length(length)
+                | ('.'
+                   & r_udecimal_t<unsigned>(u2) >> e_length(length))
              )(i1, i2);
 
             if(result.matched)
