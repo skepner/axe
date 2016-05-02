@@ -361,8 +361,8 @@ namespace axe {
                 & ~r_predstr(is_space())
                 &
                 (
-                r_udecimal_t<>() & ~('.' & ~r_udecimal_t<>())
-                | '.' & r_udecimal_t<>()
+                    (r_udecimal_t<>() & ~('.' & ~r_udecimal_t<>()))
+                    | ('.' & r_udecimal_t<>())
                 )
                 & ~(r_any("eE") & r_decimal_t<>())
                 )(i1, i2);
