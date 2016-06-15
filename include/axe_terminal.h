@@ -269,9 +269,9 @@ namespace axe {
     {
         Pred pred_;
     public:
-        r_predstr_t(Pred&& pred) : pred_(std::forward<Pred>(pred)) {}
+        inline r_predstr_t(Pred&& pred) : pred_(std::forward<Pred>(pred)) {}
 
-        template<class Iterator>
+        template<class Iterator> inline
         result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             Iterator i = i1;
@@ -279,7 +279,7 @@ namespace axe {
             return make_result(i != i1, i);
         }
 
-        const char* name() const { return "r_predstr"; }
+        inline const char* name() const { return "r_predstr"; }
     };
 
     //-------------------------------------------------------------------------
@@ -292,10 +292,10 @@ namespace axe {
         size_t min_occurrence_;
         size_t max_occurrence_;
     public:
-        r_predstr_t(Pred&& pred, size_t min_occurrence, size_t max_occurrence)
+        inline r_predstr_t(Pred&& pred, size_t min_occurrence, size_t max_occurrence)
             : pred_(std::forward<Pred>(pred)), min_occurrence_(min_occurrence), max_occurrence_(max_occurrence) {}
 
-        template<class Iterator>
+        template<class Iterator> inline
         result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             Iterator i = i1;
@@ -305,7 +305,7 @@ namespace axe {
             return make_result(count >= min_occurrence_, i);
         }
 
-        std::string name() const
+        inline std::string name() const
         {
             std::ostringstream ss("r_predstr(pred, ");
             ss << min_occurrence_ << ", " << max_occurrence_ << ')';

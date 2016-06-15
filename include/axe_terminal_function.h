@@ -80,7 +80,7 @@ namespace axe {
     /// AND rule for literals
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_and_t<
+    inline r_and_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename std::enable_if<!AXE_IS_RULE(R2),
             typename detail::r_lit_traits<R2>::type>::type
@@ -95,7 +95,7 @@ namespace axe {
     /// AND rule for value classes
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_and_t<
+    inline r_and_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename detail::r_val_traits<R2>::type
     >
@@ -108,7 +108,7 @@ namespace axe {
 #ifdef AXE_USE_LIT_TRAITS
     //-------------------------------
     template<class R1, class R2>
-    r_and_t<
+    inline r_and_t<
         typename detail::r_lit_traits<R1>::type,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -122,7 +122,7 @@ namespace axe {
     /// AND rule for string literals
     //-------------------------------------------------------------------------
     template<class CharT, class R>
-    r_and_t<
+    inline r_and_t<
         r_str_t<CharT>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -135,7 +135,7 @@ namespace axe {
     /// AND rule for char literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_and_t<
+    inline r_and_t<
         r_char_t<char>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -148,7 +148,7 @@ namespace axe {
     /// AND rule for wchar_t literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_and_t<
+    inline r_and_t<
         r_char_t<wchar_t>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -161,7 +161,7 @@ namespace axe {
     /// OR rule for literals
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_or_t<
+    inline r_or_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename std::enable_if<!AXE_IS_RULE(R2),
             typename detail::r_lit_traits<R2>::type>::type
@@ -176,7 +176,7 @@ namespace axe {
     /// OR rule for value classes
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_or_t<
+    inline r_or_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
             typename detail::r_val_traits<R2>::type
     >
@@ -189,7 +189,7 @@ namespace axe {
 #ifdef AXE_USE_LIT_TRAITS
     //-------------------------------
     template<class R1, class R2>
-    r_or_t<
+    inline r_or_t<
         typename detail::r_lit_traits<R1>::type,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -203,7 +203,7 @@ namespace axe {
     /// OR rule for string literals
     //-------------------------------------------------------------------------
     template<class CharT, class R>
-    r_or_t<
+    inline r_or_t<
         r_str_t<CharT>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -216,7 +216,7 @@ namespace axe {
     /// OR rule for char literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_or_t<
+    inline r_or_t<
         r_char_t<char>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -229,7 +229,7 @@ namespace axe {
     /// OR rule for wchar_t literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_or_t<
+    inline r_or_t<
         r_char_t<wchar_t>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -243,7 +243,7 @@ namespace axe {
     /// || rule for literals
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_seq_or_t<
+    inline r_seq_or_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename std::enable_if<!AXE_IS_RULE(R2),
             typename detail::r_lit_traits<R2>::type>::type
@@ -258,7 +258,7 @@ namespace axe {
     /// || rule for value classes
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_seq_or_t<
+    inline r_seq_or_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
             typename detail::r_val_traits<R2>::type
     >
@@ -271,7 +271,7 @@ namespace axe {
 #ifdef AXE_USE_LIT_TRAITS
     //-------------------------------
     template<class R1, class R2>
-    r_seq_or_t<
+    inline r_seq_or_t<
         typename detail::r_lit_traits<R1>::type,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -285,7 +285,7 @@ namespace axe {
     /// || rule for string literals
     //-------------------------------------------------------------------------
     template<class CharT, class R>
-    r_seq_or_t<
+    inline r_seq_or_t<
         r_str_t<CharT>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -298,7 +298,7 @@ namespace axe {
     /// || rule for char literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_seq_or_t<
+    inline r_seq_or_t<
         r_char_t<char>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -311,7 +311,7 @@ namespace axe {
     /// || rule for wchar_t literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_seq_or_t<
+    inline r_seq_or_t<
         r_char_t<wchar_t>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -325,7 +325,7 @@ namespace axe {
     /// XOR rule for literals
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_xor_t<
+    inline r_xor_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename std::enable_if<!AXE_IS_RULE(R2),
         typename detail::r_lit_traits<R2>::type>::type
@@ -340,7 +340,7 @@ namespace axe {
     /// XOR rule for value classes
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_xor_t<
+    inline r_xor_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename detail::r_val_traits<R2>::type
     >
@@ -353,7 +353,7 @@ namespace axe {
 #ifdef AXE_USE_LIT_TRAITS
     //-------------------------------
     template<class R1, class R2>
-    r_xor_t<
+    inline r_xor_t<
         typename detail::r_lit_traits<R1>::type,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -367,7 +367,7 @@ namespace axe {
     /// XOR rule for string literals
     //-------------------------------------------------------------------------
     template<class CharT, class R>
-    r_xor_t<
+    inline r_xor_t<
         r_str_t<CharT>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -380,7 +380,7 @@ namespace axe {
     /// XOR rule for char literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_xor_t<
+    inline r_xor_t<
         r_char_t<char>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -393,7 +393,7 @@ namespace axe {
     /// XOR rule for wchar_t literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_xor_t<
+    inline r_xor_t<
         r_char_t<wchar_t>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -407,7 +407,7 @@ namespace axe {
     /// unordered AND rule for literals
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_unordered_and_t<
+    inline r_unordered_and_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename std::enable_if<!AXE_IS_RULE(R2),
             typename detail::r_lit_traits<R2>::type>::type
@@ -422,7 +422,7 @@ namespace axe {
     /// unordered AND rule for value classes
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_unordered_and_t<
+    inline r_unordered_and_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename detail::r_val_traits<R2>::type
     >
@@ -435,7 +435,7 @@ namespace axe {
 #ifdef AXE_USE_LIT_TRAITS
     //-------------------------------
     template<class R1, class R2>
-    r_unordered_and_t<
+    inline r_unordered_and_t<
         typename detail::r_lit_traits<R1>::type,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -449,7 +449,7 @@ namespace axe {
     /// unordered AND rule for string literals
     //-------------------------------------------------------------------------
     template<class CharT, class R>
-    r_unordered_and_t<
+    inline r_unordered_and_t<
         r_str_t<CharT>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -462,7 +462,7 @@ namespace axe {
     /// unordered AND rule for char literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_unordered_and_t<
+    inline r_unordered_and_t<
         r_char_t<char>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -475,7 +475,7 @@ namespace axe {
     /// unordered AND rule for wchar_t literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_unordered_and_t<
+    inline r_unordered_and_t<
         r_char_t<wchar_t>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -490,7 +490,7 @@ namespace axe {
     /// atomic rule for literals
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_atomic_t<
+    inline r_atomic_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename std::enable_if<!AXE_IS_RULE(R2),
             typename detail::r_lit_traits<R2>::type>::type
@@ -505,7 +505,7 @@ namespace axe {
     /// atomic rule for value classes
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_atomic_t<
+    inline r_atomic_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename detail::r_val_traits<R2>::type
     >
@@ -518,7 +518,7 @@ namespace axe {
 #ifdef AXE_USE_LIT_TRAITS
     //-------------------------------
     template<class R1, class R2>
-    r_atomic_t<
+    inline r_atomic_t<
         typename detail::r_lit_traits<R1>::type,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -532,7 +532,7 @@ namespace axe {
     /// atomic rule for string literals
     //-------------------------------------------------------------------------
     template<class CharT, class R>
-    r_atomic_t<
+    inline r_atomic_t<
         r_str_t<CharT>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -545,7 +545,7 @@ namespace axe {
     /// atomic rule for char literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_atomic_t<
+    inline r_atomic_t<
         r_char_t<char>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -558,7 +558,7 @@ namespace axe {
     /// atomic rule for wchar_t literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_atomic_t<
+    inline r_atomic_t<
         r_char_t<wchar_t>,
         typename std::enable_if<AXE_IS_RULE(R), R>::type
     >
@@ -573,7 +573,7 @@ namespace axe {
     /// operator- for literals
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_and_t<
+    inline r_and_t<
         typename std::enable_if<AXE_IS_RULE(R1),
             r_not_t<typename detail::r_lit_traits<R2>::type>>::type,
         typename std::enable_if<!AXE_IS_RULE(R2)
@@ -589,7 +589,7 @@ namespace axe {
     /// operator- for value classes
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_and_t<
+    inline r_and_t<
         typename std::enable_if<AXE_IS_RULE(R1),
             r_not_t<typename detail::r_val_traits<R2>::type>>::type,
         typename std::enable_if<!AXE_IS_RULE(R2)
@@ -605,7 +605,7 @@ namespace axe {
     /// r_many rule for literals
     //-------------------------------------------------------------------------
     template<class R1, class R2>
-    r_many_t<
+    inline r_many_t<
         typename std::enable_if<AXE_IS_RULE(R1), R1>::type,
         typename std::enable_if<!AXE_IS_RULE(R2)
         // avoid overload ambiguity between r_many(r, 0) and r_many(r, detail::r_lit_traits<int>(0))
@@ -620,7 +620,7 @@ namespace axe {
 #ifdef AXE_USE_LIT_TRAITS
     //-------------------------------
     template<class R1, class R2>
-    r_many_t<
+    inline r_many_t<
         typename detail::r_lit_traits<R1>::type,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -634,7 +634,7 @@ namespace axe {
     /// r_many rule for string literals
     //-------------------------------------------------------------------------
     template<class CharT, class R2>
-    r_many_t<
+    inline r_many_t<
         r_str_t<CharT>,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -646,7 +646,7 @@ namespace axe {
     /// r_many rule for char literals
     //-------------------------------------------------------------------------
     template<class R2>
-    r_many_t<
+    inline r_many_t<
         r_char_t<char>,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -658,7 +658,7 @@ namespace axe {
     /// r_many rule for wchar_t literals
     //-------------------------------------------------------------------------
     template<class R2>
-    r_many_t<
+    inline r_many_t<
         r_char_t<wchar_t>,
         typename std::enable_if<AXE_IS_RULE(R2), R2>::type
     >
@@ -671,7 +671,7 @@ namespace axe {
 #ifdef AXE_USE_LIT_TRAITS
     //-------------------------------
     template<class R1, class R2>
-    r_many_t<
+    inline r_many_t<
         typename detail::r_lit_traits<R1>::type,
         typename detail::r_lit_traits<R2>::type
     >
@@ -686,7 +686,7 @@ namespace axe {
     /// r_many rule for string literals
     //-------------------------------------------------------------------------
     template<class CharT>
-            r_many_t<r_str_t<CharT>, r_str_t<CharT>>
+            inline r_many_t<r_str_t<CharT>, r_str_t<CharT>>
             r_many (const CharT* r1, const CharT* r2, size_t min_occurrence = 1, size_t max_occurrence = static_cast<size_t>(-1))
     {
         return r_many_t<r_str_t<CharT>, r_str_t<CharT>>(r_str_t<CharT>(r1), r_str_t<CharT>(r2), min_occurrence, max_occurrence);
@@ -697,7 +697,7 @@ namespace axe {
     /// r_many rule for literals
     //-------------------------------------------------------------------------
     template<class R>
-    r_many_t<
+    inline r_many_t<
             typename std::enable_if<!AXE_IS_RULE(R),
             typename detail::r_lit_traits<R>::type>::type, r_empty_t>
             r_many (R r, size_t min_occurrence = 1, size_t max_occurrence = static_cast<size_t>(-1))
@@ -787,39 +787,39 @@ namespace axe {
     /// r_predstr rule matches a predicate string
     //-------------------------------------------------------------------------
     template<class Pred>
-    r_predstr_t<Pred> r_predstr (Pred&& pred) { return r_predstr_t<Pred>(std::forward<Pred>(pred)); }
+    inline r_predstr_t<Pred> r_predstr (Pred&& pred) { return r_predstr_t<Pred>(std::forward<Pred>(pred)); }
 
     //-------------------------------------------------------------------------
     /// r_predstr rule matches a predicate string
     //-------------------------------------------------------------------------
     template<class Pred>
-    r_predstr_t<Pred, true> r_predstr (Pred&& pred, size_t occurrence)
+    inline r_predstr_t<Pred, true> r_predstr (Pred&& pred, size_t occurrence)
     { return r_predstr_t<Pred, true>(std::forward<Pred>(pred), occurrence, occurrence); }
 
     //-------------------------------------------------------------------------
     /// r_predstr rule matches a predicate string
     //-------------------------------------------------------------------------
     template<class Pred>
-    r_predstr_t<Pred, true> r_predstr (Pred&& pred, size_t min_occurrence, size_t max_occurrence)
+    inline r_predstr_t<Pred, true> r_predstr (Pred&& pred, size_t min_occurrence, size_t max_occurrence)
     { return r_predstr_t<Pred, true>(std::forward<Pred>(pred), min_occurrence, max_occurrence); }
 
     //-------------------------------------------------------------------------
     /// r_var rule matches variable and reads its value
     //-------------------------------------------------------------------------
     template<class T>
-    r_var_t<T> r_var (T& t) { return r_var_t<T>(t); }
+    inline r_var_t<T> r_var (T& t) { return r_var_t<T>(t); }
 
     //-------------------------------------------------------------------------
     /// r_array rule matches static array of rules
     //-------------------------------------------------------------------------
     template<class T, size_t N>
-    r_array_t<T, N> r_array (std::array<T, N>& a) { return r_array_t<T, N>(a); }
+            inline r_array_t<T, N> r_array (std::array<T, N>& a) { return r_array_t<T, N>(a); }
 
     //-------------------------------------------------------------------------
     /// r_sequence rule matches and reads sequence of specified length
     //-------------------------------------------------------------------------
     template<class C>
-            r_sequence_t<C> r_sequence (C& buf, size_t min_occurrence = 0, size_t max_occurrence = static_cast<size_t>(-1))
+            inline r_sequence_t<C> r_sequence (C& buf, size_t min_occurrence = 0, size_t max_occurrence = static_cast<size_t>(-1))
     {
         return r_sequence_t<C>(buf, min_occurrence, max_occurrence);
     }
@@ -1060,7 +1060,7 @@ namespace axe {
     /// r_advance rule matches if it can advance the iterator by offset
     //-------------------------------------------------------------------------
     template<class OffsetT>
-    typename std::enable_if<
+    inline typename std::enable_if<
         std::is_arithmetic<typename std::remove_reference<OffsetT>::type>::value,
         r_advance_t<OffsetT>
     >::type

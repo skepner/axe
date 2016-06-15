@@ -40,7 +40,7 @@ namespace axe {
         bool matched;
         Iterator position;
 
-        result(bool aMatched, Iterator aPosition) : matched(aMatched), position(aPosition) {}
+        inline result(bool aMatched, Iterator aPosition) : matched(aMatched), position(aPosition) {}
     };
 
     //-------------------------------------------------------------------------

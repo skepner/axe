@@ -44,7 +44,7 @@ namespace axe {
     {
         T& number_;
     public:
-        explicit r_udecimal_t(T& number) : number_(number) {}
+        explicit inline r_udecimal_t(T& number) : number_(number) {}
 
         template<class Iterator>
         result<Iterator> operator() (Iterator i1, Iterator i2) const
@@ -55,8 +55,15 @@ namespace axe {
             {
                 number_ = 0;
 
-                for(;i1 != match.position; ++i1)
-                    number_ = number_ * 10 + static_cast<T>(*i1) - '0';
+                auto i0 = i1;
+                for(;i1 != match.position; ++i1) {
+                    const auto n = number_ * 10 + static_cast<T>(*i1) - '0';
+                    if (n < number_) {
+                        throw std::overflow_error("cannot read " + std::string(i0, match.position) + " into " + typeid(T).name() + " (use c++filt to decipher the type)");
+                    }
+                    else
+                        number_ = n;
+                }
             }
             return match;
         }
@@ -67,8 +74,7 @@ namespace axe {
     struct r_udecimal_t<void> AXE_RULE
     {
     public:
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> inline result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             return r_numstr()(i1, i2);
         }
@@ -83,10 +89,9 @@ namespace axe {
         T&  number_;
     public:
 
-        explicit r_decimal_t(T& number) : number_(number) {}
+        explicit inline r_decimal_t(T& number) : number_(number) {}
 
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             char sign = 0;
 
@@ -110,8 +115,7 @@ namespace axe {
     {
     public:
 
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> inline result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             return
                 (
@@ -128,12 +132,20 @@ namespace axe {
     template<class T>
     class r_hex_t AXE_RULE
     {
+    private:
         T& number_;
+
+        template<class Iterator> static inline T convert(Iterator i)
+        {
+            return *i >= '0' && *i <= '9' ? *i - '0'
+                : *i >= 'A' && *i <= 'F' ? *i - 'A' + 10
+                : *i - 'a' + 10;
+        }
+
     public:
         explicit r_hex_t(T& number) : number_(number) {}
 
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             auto match = r_hexstr()(i1, i2);
 
@@ -141,18 +153,17 @@ namespace axe {
             {
                 number_ = 0;
 
-                for(;i1 != match.position; ++i1)
-                    number_ = number_ * 16 + convert(i1);
+                const auto i0 = i1;
+                for(;i1 != match.position; ++i1) {
+                    const auto n = number_ * 16 + convert(i1);
+                    if (n < number_) {
+                        throw std::overflow_error("cannot read " + std::string(i0, match.position) + " into " + typeid(T).name() + " (use c++filt to decipher the type)");
+                    }
+                    else
+                        number_ = n;
+                }
             }
             return match;
-        }
-    private:
-        template<class Iterator>
-        static T convert(Iterator i)
-        {
-            return *i >= '0' && *i <= '9' ? *i - '0'
-                : *i >= 'A' && *i <= 'F' ? *i - 'A' + 10
-                : *i - 'a' + 10;
         }
     };
 
@@ -164,10 +175,9 @@ namespace axe {
     {
         T& number_;
     public:
-        explicit r_oct_t(T& number) : number_(number) {}
+        explicit inline r_oct_t(T& number) : number_(number) {}
 
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             auto match = r_octstr()(i1, i2);
 
@@ -175,8 +185,15 @@ namespace axe {
             {
                 number_ = 0;
 
-                for(;i1 != match.position; ++i1)
-                    number_ = number_ * 8 + *i1 - '0';
+                const auto i0 = i1;
+                for(;i1 != match.position; ++i1) {
+                    const auto n = number_ * 8 + *i1 - '0';
+                    if (n < number_) {
+                        throw std::overflow_error("cannot read " + std::string(i0, match.position) + " into " + typeid(T).name() + " (use c++filt to decipher the type)");
+                    }
+                    else
+                        number_ = n;
+                }
             }
 
             return match;
@@ -191,10 +208,9 @@ namespace axe {
     {
         T& number_;
     public:
-        explicit r_binary_t(T& number) : number_(number) {}
+        explicit inline r_binary_t(T& number) : number_(number) {}
 
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             auto match = r_binstr()(i1, i2);
 
@@ -202,8 +218,15 @@ namespace axe {
             {
                 number_ = 0;
 
-                for(;i1 != match.position; ++i1)
-                    number_ = number_ * 2 + *i1 - '0';
+                const auto i0 = i1;
+                for(;i1 != match.position; ++i1) {
+                    const auto n = number_ * 2 + *i1 - '0';
+                    if (n < number_) {
+                        throw std::overflow_error("cannot read " + std::string(i0, match.position) + " into " + typeid(T).name() + " (use c++filt to decipher the type)");
+                    }
+                    else
+                        number_ = n;
+                }
             }
 
             return match;
@@ -218,21 +241,21 @@ namespace axe {
     {
         T& number_;
     public:
-        explicit r_ufixed_t(T& number) : number_(number) {}
+        explicit inline r_ufixed_t(T& number) : number_(number) {}
 
         template<class Iterator>
         result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
-            unsigned u1 = 0;
-            unsigned u2 = 0;
+            unsigned long u1 = 0;
+            unsigned long u2 = 0;
             unsigned length = 0;
 
             result<Iterator> result =
             (
-                (r_udecimal_t<unsigned>(u1)
-                 & ~('.' & ~(r_udecimal_t<unsigned>(u2) >> e_length(length))))
+                (r_udecimal_t<decltype(u1)>(u1)
+                 & ~('.' & ~(r_udecimal_t<decltype(u2)>(u2) >> e_length(length))))
                 | ('.'
-                   & r_udecimal_t<unsigned>(u2) >> e_length(length))
+                   & r_udecimal_t<decltype(u2)>(u2) >> e_length(length))
              )(i1, i2);
 
             if(result.matched)
@@ -249,8 +272,7 @@ namespace axe {
     class r_ufixed_t<void> AXE_RULE
     {
     public:
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> inline result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             return
                 (
@@ -270,7 +292,7 @@ namespace axe {
         T&  number_;
     public:
 
-        explicit r_fixed_t(T& number) : number_(number) {}
+        explicit inline r_fixed_t(T& number) : number_(number) {}
 
         template<class Iterator>
         result<Iterator> operator() (Iterator i1, Iterator i2) const
@@ -296,8 +318,7 @@ namespace axe {
     class r_fixed_t<void> AXE_RULE
     {
     public:
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> inline result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             return
                 (
@@ -318,30 +339,31 @@ namespace axe {
 
     public:
 
-        explicit r_double_t(T& d) : d_(d) {}
+        explicit inline r_double_t(T& d) : d_(d) {}
 
         template<class Iterator>
         result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             char sign(0);
-            unsigned i(0);
-            unsigned frac(0);
+            unsigned long i(0);
+            unsigned long frac(0);
             int flen(0);
             int e(0);
 
             result<Iterator> result =
-                (
+            (
                 ~(r_lit('-') >> sign | '+')
                 & ~r_predstr(is_space())
                 &
                 (
-                    (r_udecimal_t<unsigned>(i) & ~('.' & ~r_udecimal_t<unsigned>(frac) >> e_length(flen))) | ('.' & r_udecimal_t<unsigned>(frac) >> e_length(flen))
-                )
-                & ~(r_any("eE") & r_decimal_t<int>(e))
-                )(i1, i2);
+                    (r_udecimal_t<decltype(i)>(i) & ~('.' & ~r_udecimal_t<decltype(frac)>(frac) >> e_length(flen))) | ('.' & r_udecimal_t<decltype(frac)>(frac) >> e_length(flen))
+                 )
+                & ~(r_any("eE") & r_decimal_t<decltype(e)>(e))
+             )(i1, i2);
 
-            if(result.matched)
+            if (result.matched) {
                 d_ = (sign == '-' ? -1 : 1) * (T(i) + frac / pow(T(10), T(flen))) * pow(T(10), T(e));
+            }
 
             return result;
         }
@@ -352,8 +374,7 @@ namespace axe {
     class r_double_t<void> AXE_RULE
     {
     public:
-        template<class Iterator>
-        result<Iterator> operator() (Iterator i1, Iterator i2) const
+        template<class Iterator> inline result<Iterator> operator() (Iterator i1, Iterator i2) const
         {
             return
                 (
